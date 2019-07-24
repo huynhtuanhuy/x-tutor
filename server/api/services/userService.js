@@ -1,6 +1,7 @@
 import UserModel from '../models/userModel';
 import * as path from 'path';
 import ScheduleModel from '../models/scheduleModel';
+import userRouter from '../controllers/users/userRouter';
 
 
 class UserService {
@@ -79,6 +80,16 @@ class UserService {
         ScheduleModel
             .create(TuitionSchedules)
     }
+
+
+    findByKeyWord(value) {
+        return UserModel
+            .find(
+                {value}
+            )
+    }
+
+
 }
 
 export default new UserService()
