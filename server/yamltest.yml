@@ -1,0 +1,1165 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: web21-xtutor
+  description: My cool app
+basePath: /api/v1
+tags:
+  - name: Examples
+    description: Simple example endpoints
+  - name: Specification
+    description: The swagger API specification
+  - name: Auth
+    description: Auth
+  - name: Users
+    description: Users endpoints
+  - name: Tuition Activity
+    description: i don't know how can i detail description of this
+  - name: Session
+    description: tuition activity session
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+definitions:
+  # Schema for error response body
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    required:
+      - code
+      - message
+  
+  ExampleBody:
+    type: object
+    title: example
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        example: no_stress
+  
+  RegisterBody:
+    type: object
+    title: register user
+    required:
+      - username
+      - password
+      - email
+      - roleId
+    properties:
+      username:
+        type: string
+        example: huongpham211
+      email:
+        type: string
+        example: huongpham211@gmail.com
+      password:
+        type: string
+        format: password
+        example: "huonghuong"
+      rolesId:
+        type: string
+        enum: ['Tutor', 'Student']
+  
+  UserBody:
+    type: object
+    title: user
+    properties:
+      firstName:
+       type: string
+       example: Huong
+      lastName:
+        type: string
+        example: Pham
+      otherName:
+       type: string
+       example: Cao
+      address:
+        type: string
+        example: 75 Ho Tung Mau
+      country:
+        type: string
+        example: Viet Nam
+      nationality:
+        type: string
+        example: Laos
+      raceName:
+        type: string
+        example: 
+      gender:
+        type: string
+        example: female
+      religion:
+        type: string
+        example: No religion
+      email:
+        type: string
+      CurrentAcademicLevel:
+        type: string
+        example: Primary School
+      city:
+        type: string
+        example: Ha Noi
+      dateOfBirth:
+        type: string
+        format: date
+      language:
+        type: string
+        example: vietnamese
+  
+  PaymentBody:
+    type: object
+    title: payment
+    required:
+    - cardNumber
+    - expiredDate
+    - firstName
+    - lastName
+    - residentialAddress
+    - cityAddress
+    - province
+    - country
+    properties:
+      cardNumber:
+        type: number
+        example: 7893347716378
+      expiredDate:
+        type: string
+        format: date
+      firstName:
+        type: string
+        example: PHAM
+      lastName:
+        type: string
+        example: HUONG
+      residentialAddress:
+        type: string
+        example: 75 Ho Tung Mau
+      cityAddress:
+        type: string
+        example:
+      province:
+        type: string
+        example:
+      country:
+        type: string
+        example:
+      postalCode:
+        type: string
+        example: 460000 - 470000
+      remarks:
+        type: string
+        example:
+  
+  ScheduleBody:
+    type: object
+    title: schedule
+    required:
+      - preferDay
+      - periodeStart
+      - studentId
+      - tutorId
+    properties:
+      preferDay:
+        type: array
+        items: 
+          type: string
+          enum: [Monday, Tuesday, Wednesday, Thursday, Friday, Satuday, Sunday]
+      periodeStart:
+        type: string
+        format: date
+        example:
+      periodeEnd:
+        type:  string
+        format: date
+        example:
+      sessionNumber:
+        type: integer
+        example: 6
+      feePerHour:
+        type: number
+        example: 12.5
+      tuitionStatus:
+        type: string
+        example:
+      feeTotal:
+        type: number
+        example: 75
+      studentId:
+        type: string
+        description: ObjectId reference
+        example: 
+      tutorId:
+        type: string
+        description: ObjectId reference
+        example:
+      country:
+        type: string
+        example: Laos
+      academicLevel:
+        type: string
+        example: easy
+      academicGrade:
+        type: string
+        example:
+      courseCode:
+        type: string
+        example:
+      paymentType:
+        type: string
+        example: paypal
+      paymentAmount:
+        type: integer
+        example: 1
+      paymentStatus:
+        type: string
+        example: paid
+      paymentDate:
+        type: string
+        format: date
+        example:
+      hoursPerLession:
+        type: number
+        example: 2
+      hourStart:
+        type: string
+        format: time
+      datetime: 
+        type: string
+        format: datetime
+        description: Date.Now
+        example:
+
+    # TutorReference:
+  #   title: tutorReference
+  #   type: object
+  #   properties:
+  #     education:
+  #       type: array
+  #       items:
+  #         type: object
+  #         properties:
+  #           major:
+  #             type: string
+  #             example: Python
+  #           institute:
+  #             type: string
+  #             example: master
+  #           certificate:
+  #             type: string
+  #             example: Techkids
+  
+  # TutorWorkingExperience:
+  #   type: object
+  #   title: tutorWorkingExperience
+  #   properties:
+  #     year:
+  #       type: string
+  #     workedAt:
+  #       type: string
+  #     experience:
+  #       type: string
+  #       example:
+
+  # TutorTeachingSubject:
+  #   type: object
+  #   title: tutorTeachingSubject
+  #   properties:
+  #     basedIn:
+  #       type: string
+  #     teachingSubject:
+  #       type: object
+  #       properties:
+  #         course:
+  #           type: string
+  #           example: Marketing
+  #         feePerHour:
+  #           type: number
+  #           example: 12.5
+  #         academicLevel:
+  #           type: string
+  #           example: Beginer
+  #         note:
+  #           type: string
+  #           example:
+  
+  TutorInfoBody:
+    type: object
+    title: tuitionPreference
+    properties:
+      user:
+        type: string
+        description: ObjectId reference
+      tutorReference:
+        type: object
+        properties:
+          aboutMe:
+            type: string
+            example: I'm the best tutor of the world :)))
+          education:
+            type: array
+            items:
+              type: object
+              properties:
+                major:
+                  type: string
+                  example: Python
+                institute:
+                  type: string
+                  example:
+                certificate:
+                  type: string
+                  example:
+      tutorWorkingExperience:
+        type: array
+        items:
+          type: object
+          properties:
+            year:
+              type: string
+            workedAt:
+              type: string
+            experience:
+              type: string
+              example:
+      tutorTeachingSubject:
+        type: array
+        items:
+          type: object
+          properties:
+            country:
+              type: string
+              example: Singapore
+            subject:
+              type: array
+              items:
+                type: object
+                properties:
+                  course:
+                    type: string
+                    example: Math
+                  feePerHour:
+                    type: number
+                    example: 12.5
+                  feeCommitions:
+                    type: number
+                    example:
+                  feeEarn:
+                    type: number
+                    example:
+                  academicLevel:
+                    type: string
+                    example: Primary School
+                  academicGrade:
+                    type: string
+                    example: Primary 3
+                  note:
+                    type: string
+                    example:
+      tutorCalendar:
+        type: object
+        properties:
+          startDate:
+            type: string
+            format: date
+          endDate:
+            type: string
+            format: date
+          status:
+            type: string
+            example: 
+  
+  SessionBody:
+    type: object
+    title: session
+    required:
+      - scheduleId
+    properties:
+      scheduleId:
+        type: string
+        description: ObjectId reference
+      tutor:
+        type: string
+        description: ObjectId reference
+      student:
+        type: string
+      rate:
+        type: object
+        properties:
+          numStar:
+            type: integer
+          comment:
+            type: string
+          datetime:
+            type: string
+            format: date-time
+      report:
+        type: object
+        properties:
+          reason:
+            type: string
+            enum: [Late, Absent, Left early, Technical Dificult, Others]
+          comment:
+            type: string
+          datetime:
+            type: string
+            format: date-time
+      documentFile:
+        type: string
+        format: binary
+      videoFile:
+        type: string
+        format: binary
+      datetime:
+        type: string
+        format: date-time
+  
+  AvatarModel:
+    type: object
+    title: avatar
+    properties:
+      user:
+        type: string
+        description: ObjectId reference
+      photo:
+        type: string
+        format: binary
+
+paths:
+  /examples:
+    get:
+      tags:
+        - Examples
+      description: Fetch all examples
+      responses:
+        200:
+          description: Returns all examples
+    post:
+      tags:
+        - Examples
+      description: Create a new example
+      parameters:
+        - name: example
+          in: body
+          description: an example
+          required: true
+          schema:
+            $ref: "#/definitions/ExampleBody"
+      responses:
+        200:
+          description: Returns all examples
+
+  /examples/{id}:
+    get:
+      tags:
+        - Examples
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the example to retrieve
+          type: integer
+      responses:
+        200:
+          description: Return the example with the specified id
+        404:
+          description: Example not found
+
+  /spec:
+    get:
+      tags:
+        - Specification
+      responses:
+        200:
+          description: Return the API specification
+  
+  /auth:
+    post:
+      tags:
+        - Auth
+      # summary: Create a new user
+      description: resgister and add new user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: The user to create.
+          schema:
+            $ref: '#/definitions/RegisterBody'
+      responses:
+        200:
+          description: Registed
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+    get:
+      tags:
+        - Auth
+      summary: Login
+      description: login
+      parameters:
+        - in: body
+          name: user login
+          description: The user to login
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+                format: password
+      responses:
+        200:
+          description: login succesfull
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+                format: password
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /users:
+    get:
+      tags:
+        - Users
+      description: Fetch all users
+      responses:
+        200:
+          description: return all users
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'       
+ 
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      description: Fetch the user with the specified id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the user to retrieve
+          type: string
+      responses:
+        200:
+          description: return the user with the specified id
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'       
+    
+    put:
+      tags:
+        - Users
+      description: Update a user with the specified id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: the id of the user to retrieve
+        - name: user
+          in: body
+          description: the user to update.
+          schema:
+            $ref: "#/definitions/UserBody"
+      responses:
+        200:
+          description: updated
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'       
+    
+          
+    delete:
+      tags:
+        - Users
+      description: Delete a user with the specified id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: the id of the user to retrieve
+      responses:
+        200:
+          description: Deleted
+        404:
+          description: user not found
+  
+  /users/{id}/avatar:
+    post:
+      tags:
+        - Users
+      description: add new profile Picture
+      consumes:
+        - multipart/form-data
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: UserId
+        - in: formData
+          name: avatar
+          type: file
+          description: the avatar to upload
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    patch:
+      tags:
+        - Users
+      description: change profile Picture
+      consumes:
+        - multipart/form-data
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: userId => to retrieve avatarId
+        - in: formData
+          name: avatar
+          type: file
+          description: the avatar to upload
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /users/{id}/password:
+    patch:
+      tags:
+        - Users
+      description: change password
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: userId
+        - in: body
+          name: password
+          schema:
+            type: object
+            properties:
+              password:
+                type: string
+          description: the avatar to upload
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /users/{id}/payment/info:
+    get:
+      tags:
+        - Users
+      description: return payment Method
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: userId
+      responses:
+        200:
+          description: return the Payment Method
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+    post:
+      tags:
+        - Users
+      description: Add Payment Method Infomation
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: userId
+      responses:
+        200:
+          description: return the Payment Method Infomation
+          schema:
+            $ref: '#/definitions/PaymentBody'
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+    put:
+      tags:
+        - Users
+      description: Update Payment Method Infomation
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: userId
+      responses:
+        200:
+          description: return the Payment Method of user with specified Id
+          schema:
+            $ref: '#/definitions/PaymentBody'
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /users/{id}/tutor-info:
+    get:
+      tags:
+        - Users
+      description: get tuition preference of spcified user
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: userId
+      responses:
+        200:
+          description: return tuition preference
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+    put:
+      tags:
+        - Users
+      description: update tuition preference
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: userId
+        - in: body
+          name: tuition
+          schema:
+            $ref: '#/definitions/TutorInfoBody'
+      responses:
+        200:
+          description: updated
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+  /tuition-activity:
+    get:
+      tags:
+        - Schedule
+      description: et all schedule of one user
+      responses:
+        200:
+          description: return all schedule of user
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+    post:
+      tags:
+       - Schedule
+      description: add new schedule
+      parameters:
+        - in: body
+          name: schedule
+          description: new schedule
+          schema:
+            $ref: "#/definitions/ScheduleBody"
+      responses:
+        200:
+          description: added
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /schedules/{id}:
+    get:
+      tags:
+        - Schedule
+      description: get schedule
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of schedule to retrieve
+          type: string
+      responses:
+        200:
+          description: return schedule
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+    put:
+      tags:
+        - Schedule
+      description: update schedule
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of schedule to retrieve
+          type: string
+        - in: body
+          name: schedule
+          schema:
+            $ref: '#/definitions/ScheduleBody'
+      responses:
+        200:
+          description: updated
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+    delete:
+      tags:
+        - Schedule
+      description: delete schedule with specified id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        200:
+          description: deleted
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /schedules/{id}/payment:
+    put:
+      tags:
+        - Schedule
+      description: update payment status
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        200:
+          description: deleted
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /sessions:
+    get:
+      tags:
+        - Session
+      description: fetch all session of specified schedule
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+    post:
+      tags:
+        - Session
+      description: add new Session of specified schedule
+      parameters:
+        - in: body
+          name: session
+          required: true
+          schema:
+            $ref: '#/definitions/SessionBody'
+      responses:
+        200:
+          description: Ok
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /sessions/{sessionId}:
+    put:
+      tags:
+        - Session
+      description: update session with specified Id
+      parameters:
+        - in: path
+          name: sessionId
+          type: string
+          required: true
+        - in: body
+          name: session
+          required: true
+          schema:
+            $ref: '#/definitions/SessionBody'
+      responses:
+        200:
+          description: Ok
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+    delete:
+      tags:
+        - Session
+      description: delete session with specified Id
+      parameters:
+        - in: path
+          name: sessionId
+          type: string
+          required: true
+        - in: body
+          name: session
+          required: true
+          schema:
+            $ref: '#/definitions/SessionBody'
+      responses:
+        200:
+          description: Ok
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  # /sessions/{sessionId}/rate:
+  #   put:
+  #     tags:
+  #       - Session
+  #     description: update field Rate of sessionModel
+  #     parameters:
+  #       - in: path
+  #         name: sessionId
+  #         type: string
+  #         required: true
+  #       - in: body
+  #         name: session
+  #         required: true
+  #         schema:
+  #           type: object
+  #           properties:
+  #             numStar:
+  #               type: integer
+  #             comment:
+  #               type: string
+  #             datetime:
+  #               type: string
+  #               format: date-time
+  #     responses:
+  #       200:
+  #         description: Ok
+  #       401:
+  #         $ref: '#/responses/Unauthorized'
+  #       404:
+  #         $ref: '#/responses/NotFound'
+    
+  #   delete:
+  #     tags:
+  #       - Session
+  #     description: delete comment
+  #     parameters:
+  #       - in: path
+  #         name: sessionId
+  #         type: string
+  #         required: true
+  #       - in: body
+  #         name: rate
+  #         required: true
+  #         schema:
+  #           type: object
+  #           properties:
+  #             comment:
+  #               type: string
+  #             datetime:
+  #               type: string
+  #               format: date-time
+  #     responses:
+  #       200:
+  #         description: Ok
+  #       401:
+  #         $ref: '#/responses/Unauthorized'
+  #       404:
+  #         $ref: '#/responses/NotFound'     
+  
+  # /sessions/{sessionId}/report:
+  #   put:
+  #     tags:
+  #       - Session
+  #     description: report
+  #     parameters:
+  #       - in: path
+  #         name: sessionId
+  #         type: string
+  #         required: true
+  #       - in: body
+  #         name: report
+  #         required: true
+  #         schema:
+  #           type: object
+  #           properties:
+  #             reason:
+  #               type: string
+  #               enum: [ Late, Absent, Left early, Technical Dificult, Others ]
+  #             comment:
+  #               type: string
+  #             datetime:
+  #               type: string
+  #               format: date-time
+  #     responses:
+  #       200:
+  #         description: OK
+  #       401:
+  #         $ref: '#/responses/Unauthorized'
+  #       404:
+  #         $ref: '#/responses/NotFound'
+  
+  # /sessions/{sessionId}/video:
+  #   put:
+  #     tags:
+  #       - Session
+  #     description: upload video File
+  #     consumes:
+  #       - multipart/form-data
+  #       - application/x-www-form-urlencoded
+  #     parameters:
+  #       - in: path
+  #         name: sessionId
+  #         type: string
+  #         required: true
+  #       - in: formData
+  #         name: video
+  #         type: file
+  #         description: the video File to upload
+  #     responses:
+  #       200:
+  #         description: OK
+  #       401:
+  #         $ref: '#/responses/Unauthorized'
+  #       404:
+  #         $ref: '#/responses/NotFound'
+  #   delete:
+  #     tags:
+  #       - Session
+  #     description: delete video File
+  #     consumes:
+  #       - multipart/form-data
+  #       - application/x-www-form-urlencoded
+  #     parameters:
+  #       - in: path
+  #         name: sessionId
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: OK
+  #       401:
+  #         $ref: '#/responses/Unauthorized'
+  #       404:
+  #         $ref: '#/responses/NotFound'
+  
+  # /sessions/{sessionId}/document:
+  #   put:
+  #     tags:
+  #       - Session
+  #     description: upload session document File
+  #     consumes:
+  #       - multipart/form-data
+  #       - application/x-www-form-urlencoded
+  #     parameters:
+  #       - in: path
+  #         name: sessionId
+  #         type: string
+  #         required: true
+  #       - in: formData
+  #         name: document
+  #         type: file
+  #         description: the document File to upload
+  #     responses:
+  #       200:
+  #         description: OK
+  #       401:
+  #         $ref: '#/responses/Unauthorized'
+  #       404:
+  #         $ref: '#/responses/NotFound'
+  #   delete:
+  #     tags:
+  #       - Session
+  #     description: delete document File
+  #     consumes:
+  #       - multipart/form-data
+  #       - application/x-www-form-urlencoded
+  #     parameters:
+  #       - in: path
+  #         name: sessionId
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: OK
+  #       401:
+  #         $ref: '#/responses/Unauthorized'
+  #       404:
+  #         $ref: '#/responses/NotFound'
+  
+# Descriptions of common responses
+responses:
+  NotFound:
+    description: The specified resource was not found
+    schema:
+      $ref: '#/definitions/Error'
+  Unauthorized:
+    description: Unauthorized
+    schema:
+      $ref: '#/definitions/Error'

@@ -1,0 +1,783 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: web21-xtutor
+  description: "X Tutor - Where your money become air :)"
+basePath: /api/v1
+tags:
+  - name: Examples
+    description: Simple example endpoints
+  - name: Specification
+    description: The swagger API specification
+  - name: Auth
+    description: Auth
+  - name: Users
+    description: Users endpoints
+  - name: Tuition Schedules
+    description: i don't know how can i detail description of this
+  - name: Session
+    description: tuition activity session
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+# securitiyDefinitions:
+#   Bearer:
+#     type: apiKey
+#     name: Authorization
+#     in: header
+
+
+definitions:
+  # Schema for error response body
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    required:
+      - code
+      - message
+  
+  ExampleBody:
+    type: object
+    title: example
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        example: no_stress
+  
+  RegisterBody:
+    type: object
+    title: register user
+    required:
+      - username
+      - password
+      - email
+      - roleId
+    properties:
+      username:
+        type: string
+        example: huongpham211
+      email:
+        type: string
+        example: huongpham211@gmail.com
+      password:
+        type: string
+        format: password
+        example: "huonghuong"
+      rolesId:
+        type: string
+        enum: ['Tutor', 'Student']
+  
+  SignInBody:
+    type: object
+    title: login
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+        format: password
+
+  UserBody:
+    type: object
+    title: user
+    properties:
+      firstName:
+       type: string
+       example: Huong
+      lastName:
+        type: string
+        example: Pham
+      otherName:
+       type: string
+       example: Cao
+      address:
+        type: string
+        example: 75 Ho Tung Mau
+      country:
+        type: string
+        example: Viet Nam
+      nationality:
+        type: string
+        example: Laos
+      raceName:
+        type: string
+        example: 
+      gender:
+        type: string
+        example: female
+      religion:
+        type: string
+        example: No religion
+      email:
+        type: string
+      CurrentAcademicLevel:
+        type: string
+        example: Primary School
+      city:
+        type: string
+        example: Ha Noi
+      dateOfBirth:
+        type: string
+        format: date
+      language:
+        type: string
+        example: vietnamese
+  
+  PaymentBody:
+    type: object
+    title: payment
+    required:
+    - cardNumber
+    - expiredDate
+    - firstName
+    - lastName
+    - residentialAddress
+    - cityAddress
+    - province
+    - country
+    properties:
+      cardNumber:
+        type: number
+        example: 7893347716378
+      expiredDate:
+        type: string
+        format: date
+      firstName:
+        type: string
+        example: PHAM
+      lastName:
+        type: string
+        example: HUONG
+      residentialAddress:
+        type: string
+        example: 75 Ho Tung Mau
+      cityAddress:
+        type: string
+        example:
+      province:
+        type: string
+        example:
+      country:
+        type: string
+        example:
+      postalCode:
+        type: string
+        example: 460000 - 470000
+      remarks:
+        type: string
+        example:
+
+  AvatarModel:
+    type: object
+    title: avatar
+    properties:
+      user:
+        type: string
+        description: ObjectId reference
+      photo:
+        type: string
+
+  TuitionScheduleBody:
+    type: object
+    title: schedule
+    required:
+      - preferDay
+      - periodStart
+      - senderId
+      - tutorId
+    properties:      
+      preferDay:
+        type: array
+        items: 
+          type: string
+          enum: [Monday, Tuesday, Wednesday, Thursday, Friday, Satuday, Sunday]
+      periodeStart:
+        type: string
+        format: date
+      sessionNumber:
+        type: integer
+        example: 6
+      senderId:
+        type: string
+        description: ObjectId 
+      tutorId:
+        type: string
+        description: ObjectId
+      country:
+        type: string
+        example: Laos
+      academicLevel:
+        type: string
+        example: beginer
+      academicGrade:
+        type: string
+        example:
+      paymentAmount:
+        type: integer
+        example: 1
+      paymentDate:
+        type: string
+        format: date
+      hoursPerLession:
+        type: number
+        example: 2
+      hourStart:
+        type: string
+        format: time
+
+  TutorDataBody:
+    type: object
+    title: tutorData
+    properties:
+      aboutMe:
+        type: string
+        example: I'm the best tutor of the world :)))
+      education:
+        type: array
+        items:
+          type: object
+          properties:
+            major:
+              type: string
+              example: Python
+            institute:
+              type: string
+              example:
+            certificate:
+              type: string
+              example:
+      tutorWorkingExperience:
+        type: array
+        items:
+          type: object
+          properties:
+            year:
+              type: string
+            experience:
+              type: string
+              example:
+      tutorTeachingSubject:
+        type: array
+        items:
+          type: object
+          properties:
+            country:
+              type: string
+              example: Singapore
+            subject:
+              type: array
+              items:
+                type: object
+                properties:
+                  course:
+                    type: string
+                    example: Math
+                  feePerHour:
+                    type: number
+                    example: 12.5
+                  academicLevel:
+                    type: string
+                    example: Beginer
+                  note:
+                    type: string
+                    example:
+
+  
+  
+        
+paths:
+  /examples:
+    get:
+      tags:
+        - Examples
+      description: Fetch all examples
+      responses:
+        200:
+          description: Returns all examples
+    post:
+      tags:
+        - Examples
+      description: Create a new example
+      parameters:
+        - name: example
+          in: body
+          description: an example
+          required: true
+          schema:
+            $ref: "#/definitions/ExampleBody"
+      responses:
+        200:
+          description: Returns all examples
+
+  /examples/{id}:
+    get:
+      tags:
+        - Examples
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the example to retrieve
+          type: integer
+      responses:
+        200:
+          description: Return the example with the specified id
+        404:
+          description: Example not found
+
+  /spec:
+    get:
+      tags:
+        - Specification
+      responses:
+        200:
+          description: Return the API specification
+  
+  /auth:
+    post:
+      tags:
+        - Auth
+      summary: Sign In
+      parameters:
+        - in: body
+          name: user login
+          description: The user to login
+          schema:
+            $ref: '#/definitions/SignInBody'
+      responses:
+        200:
+          description: login succesfull
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    delete:
+      tags:
+        - Auth
+      summary: Sign Out
+      parameters:
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+      responses:
+        200:
+          description: OK
+  
+  /users:
+    post:
+      tags:
+        - Users
+      # summary: Create a new user
+      summary: resgister and add new user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: The user to create.
+          schema:
+            $ref: '#/definitions/RegisterBody'
+      responses:
+        200:
+          description: Registed
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+    get:
+      summary: Fetch all users
+      tags:
+        - Users
+      description: Fetch all users
+      parameters:
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+      responses:
+        200:
+          description: return all users
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'       
+ 
+  /users/{id}:
+    get:
+      summary: Fetch the user with the specified id
+      tags:
+        - Users
+      description: Fetch the user with the specified id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the user to retrieve
+          type: string
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+      responses:
+        200:
+          description: return the user with the specified id
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'       
+    
+    put:
+      tags:
+        - Users
+      summary: Update a user with the specified id
+      description: Update a user with the specified id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: the id of the user to retrieve
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+        - name: user
+          in: body
+          description: the user to update.
+          schema:
+            $ref: "#/definitions/UserBody"
+      responses:
+        200:
+          description: updated
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'       
+    
+    delete:
+      tags:
+        - Users
+      summary: Delete a user with the specified id
+      description: Delete a user with the specified id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: the id of the user to retrieve
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+      responses:
+        200:
+          description: Deleted
+        404:
+          description: user not found
+  
+  /users/{id}/avatar:
+    get:
+      tags:
+        - Users
+      description: get profile Picture of user with specified id
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: UserId
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    patch:
+      tags:
+        - Users
+      description: change profile Picture
+      consumes:
+         - multipart/form-data
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: userId
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+        - in: formData
+          name: avatar
+          type: file
+          description: the avatar to upload
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /users/{id}/password:
+    patch:
+      tags:
+        - Users
+      description: change password
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: userId
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+        - in: body
+          name: password
+          schema:
+            type: object
+            properties:
+              password:
+                type: string
+          description: the avatar to upload
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /users/{id}/tutor-data:
+    get:
+      tags:
+        - Tutor data
+      description: fetch tutor data
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: tutorId
+          required: true 
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+    put:
+      tags:
+        - Tutor data
+      description: update tutor data
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: tutorId
+          required: true
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+        - in: body
+          name: tutorData
+          schema:
+            $ref: '#/definitions/TutorDataBody'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /cards:
+    get:
+      tags:
+        - Payment Cards
+      summary: get all payment cards of specified user
+      parameters:
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    
+    post:
+      tags:
+        - Payment Cards
+      summary: create new payment card
+      parameters:
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+        - in: body
+          name: cardInfo
+          schema:
+            $ref: "#/definitions/PaymentBody"
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /cards/{cardId}:
+    get:
+      tags:
+        - Payment Cards
+      summary: get card with specified ID
+      parameters:
+        - in: path
+          name: cardId
+          required: true 
+          type: string
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+
+    put:
+      tags:
+        - Payment Cards
+      summary: update payment card info
+      parameters:
+        - in: path
+          name: cardId
+          required: true 
+          type: string
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+
+    delete:
+      tags:
+        - Payment Cards
+      summary: delete payment card info
+      parameters:
+        - in: path
+          name: cardId
+          required: true 
+          type: string
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+
+  /users/{id}/tuition-schedules:
+    post:
+      tags:
+        - Tuition Schedules
+      summary: create new tuition schedule
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true 
+          description: id of tutor
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>
+        - in: body
+          name: schedule
+          required: true
+          schema:
+            $ref: '#/definitions/TuitionScheduleBody'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+
+ 
+# Descriptions of common responses
+responses:
+  NotFound:
+    description: The specified resource was not found
+    schema:
+      $ref: '#/definitions/Error'
+  Unauthorized:
+    description: Unauthorized
+    schema:
+      $ref: '#/definitions/Error'
