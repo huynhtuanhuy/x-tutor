@@ -31,12 +31,13 @@ class PaymentController {
 
 
     createNewCard(req, res) {
+        //console.log(req.decoded.ownerId)
         req.body.userId = req.decoded.ownerId;
-        const {card} = req.body
-        console.log(card)
+        //console.log(req.body)
+        const card = req.body
         PaymentService
             .createNewCard(card)
-            .then(cardCreated => res.status(200).json({success: true, message: 'Created!!', cardCreated}))
+            .then(cardCreated => res.status(200).json({success: true, cardCreated}))
             .catch(err => {
                 console.log(err)
                 res.status(500).json({success: false, err})

@@ -132,49 +132,46 @@ definitions:
         type: string
         example: vietnamese
   
-  PaymentBody:
+  PaymentCardBody:
     type: object
-    title: payment
+    title: paymentCard
     required:
     - cardNumber
+    - nameOnCard
+    - cardType
     - expiredDate
-    - firstName
-    - lastName
-    - residentialAddress
-    - cityAddress
-    - province
-    - country
     properties:
+      cardType:
+        type: string
+        enum: ['Master Card', 'Visa']
+        example: Master Card
       cardNumber:
         type: number
         example: 7893347716378
       expiredDate:
         type: string
         format: date
-      firstName:
+      nameOnCard:
         type: string
-        example: PHAM
-      lastName:
-        type: string
-        example: HUONG
+        example: PHAM HUONG
       residentialAddress:
         type: string
         example: 75 Ho Tung Mau
-      cityAddress:
+      city:
         type: string
-        example:
+        example: Ha Noi
       province:
         type: string
-        example:
+        example: HA NOI
       country:
         type: string
-        example:
+        example: VIET NAM
       postalCode:
         type: string
-        example: 460000 - 470000
+        example: 460000
       remarks:
         type: string
-        example:
+        example: nothing
 
   AvatarModel:
     type: object
@@ -664,7 +661,7 @@ paths:
         - in: body
           name: cardInfo
           schema:
-            $ref: "#/definitions/PaymentBody"
+            $ref: "#/definitions/PaymentCardBody"
       responses:
         200:
           description: OK
@@ -710,6 +707,10 @@ paths:
           required: true 
           type: string
           description: Bearer <token>'
+        - in: body
+          name: cardInfo
+          schema:
+            $ref: "#/definitions/PaymentCardBody"
       responses:
         200:
           description: OK
