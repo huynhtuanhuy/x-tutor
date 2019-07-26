@@ -40,6 +40,7 @@ const userModel = new Schema({
     //tutor Infomations
     tutorData: {
         //tutor Reference
+        hourlyRate: {type: Number},
         aboutMe: {type: String},
         education: [{
             major: {type: String},
