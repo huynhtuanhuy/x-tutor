@@ -5,18 +5,6 @@ import * as path from 'path';
 
 
 class UserController {
-    registerUser(req, res) {
-        const {username, password, email, rolesId} = req.body;
-        userService
-            .createNewUser({username, password, email, rolesId})
-            .then(userCreated => res.status(200).json({success:true, userCreated}))
-            .catch(err => {
-                console.log(err)
-                res.send(500).json({err})
-            })
-    }
-
-
     getAllUser(req, res) {
         userService
             .getAllUser()

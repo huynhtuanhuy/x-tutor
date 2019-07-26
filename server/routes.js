@@ -15,6 +15,21 @@ export default function routes(app) {
     }
     cb(null, corsOptions)
   }));
+  app.use((req, res, next)=>{
+    res.setHeader("X-Frame-Options", "ALLOWALL");
+    res.setHeader(
+        "Access-Control-Allow-Methods",
+        "POST, GET, PUT, DELETE, OPTIONS"
+    );
+
+    // res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Authorization, Origin, X-Requested-With, Content-Type, Accept"
+    );
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+  });
   app.use('/api/v1/examples', examplesRouter);
   app.use('/api/v1/auth', authRouter);
   app.use('/api/v1/users', Auth.validateToken, userRouter);

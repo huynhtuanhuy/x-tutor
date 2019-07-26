@@ -39,7 +39,6 @@ export default express
     .Router()
     .get('/', UserController.getAllUser)
     .get('/:id', UserController.getUserById)
-    .post('/', UserController.registerUser)
     .put('/:id', UserController.updateInfoUser)
     .patch('/:id/password', UserController.updatePassword)
     // .get('/:id/avatar', UserController.getAvatar)

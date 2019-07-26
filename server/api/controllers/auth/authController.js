@@ -3,8 +3,19 @@ import UserService from '../../services/userService'
 import * as body from 'body-parser';
 import * as bcrypt from 'bcryptjs';
 
-
 class AuthController {
+    registerUser(req, res) {
+        const {username, password, email, rolesId} = req.body;
+        UserService
+            .createNewUser({username, password, email, rolesId})
+            .then(userCreated => res.status(200).json({success:true, userCreated}))
+            .catch(err => {
+                console.log(err)
+                res.send(500).json({err})
+            })
+    }
+
+
     logIn(req, res) {
         UserService
         .checkUsername(req.body.username)
@@ -27,6 +38,8 @@ class AuthController {
             res.status(500).json({err})
         })
     }
+
+    
 }
 
 
