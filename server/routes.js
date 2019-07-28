@@ -9,9 +9,9 @@ import cors from 'cors';
 export default function routes(app) {
   app.use(cors(function(req, cb) {
     const corsOptions = {
-      "origin": "http://localhost:3001",
-      "method": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
-      "credentials": true
+      origin: "http://localhost:3001",
+      method: "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+      credentials: true
     }
     cb(null, corsOptions)
   }));

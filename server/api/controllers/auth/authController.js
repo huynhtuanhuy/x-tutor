@@ -20,7 +20,7 @@ class AuthController {
         UserService
         .checkUsername(req.body.username)
         .then(userFound =>{
-            if(!userFound) res.sendStatus(404).json({success: false, message: 'Incorrect username'});
+            if(!userFound) res.status(404).json({success: false, message: 'Incorrect username'});
             else {
                 bcrypt
                     .compare(req.body.password, userFound.password)
