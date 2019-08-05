@@ -173,16 +173,6 @@ definitions:
         type: string
         example: nothing
 
-  AvatarModel:
-    type: object
-    title: avatar
-    properties:
-      user:
-        type: string
-        description: ObjectId reference
-      photo:
-        type: string
-
   TuitionScheduleBody:
     type: object
     title: schedule
@@ -231,13 +221,21 @@ definitions:
         type: string
         format: time
 
-  TutorDataBody:
+  TutorIntro:
     type: object
-    title: tutorData
+    title: tutorIntro
     properties:
       aboutMe:
         type: string
         example: I'm the best tutor of the world :)))
+      hourlyRate:
+        type: number
+        example: 2.5
+  
+  TutorReference:
+    type: object
+    title: tutorReference
+    properties:
       education:
         type: array
         items:
@@ -252,7 +250,12 @@ definitions:
             certificate:
               type: string
               example:
-      tutorWorkingExperience:
+    
+  TutorWorkingExperience:
+    type: object
+    title: tutorWorkingExperience
+    properties:
+      workingExperience:
         type: array
         items:
           type: object
@@ -262,7 +265,15 @@ definitions:
             experience:
               type: string
               example:
-      tutorTeachingSubject:
+  
+  TutorTeachingSubject:
+    type: object
+    title: tutorTeachingSubject
+    properties:
+      basedIn:
+        type: string
+        example: Viet Nam
+      teachingSubject:
         type: array
         items:
           type: object
@@ -288,8 +299,6 @@ definitions:
                     type: string
                     example:
 
-  
-  
         
 paths:
   /examples:
@@ -579,11 +588,62 @@ paths:
         404:
           $ref: '#/responses/NotFound'
   
-  /users/{id}/tutor-data:
-    get:
+  # /users/{id}/tutor-data:
+  #   get:
+  #     tags:
+  #       - Tutor data
+  #     description: fetch tutor data
+  #     parameters:
+  #       - in: path
+  #         name: id
+  #         type: string
+  #         description: tutorId
+  #         required: true 
+  #       - in: header
+  #         name: authorization
+  #         required: true 
+  #         type: string
+  #         description: Bearer <token>'
+  #     responses:
+  #       200:
+  #         description: OK
+  #       401:
+  #         $ref: '#/responses/Unauthorized'
+  #       404:
+  #         $ref: '#/responses/NotFound'
+    
+    # put:
+    #   tags:
+    #     - Tutor data
+    #   description: update tutor data
+    #   parameters:
+    #     - in: path
+    #       name: id
+    #       type: string
+    #       description: tutorId
+    #       required: true
+    #     - in: header
+    #       name: authorization
+    #       required: true 
+    #       type: string
+    #       description: Bearer <token>'
+    #     - in: body
+    #       name: tutorData
+    #       schema:
+    #         $ref: '#/definitions/TutorDataBody'
+    #   responses:
+    #     200:
+    #       description: OK
+    #     401:
+    #       $ref: '#/responses/Unauthorized'
+    #     404:
+    #       $ref: '#/responses/NotFound'
+
+  /users/{id}/tutor-intro:
+    patch:
       tags:
         - Tutor data
-      description: fetch tutor data
+      summary: update the tutor's introduction
       parameters:
         - in: path
           name: id
@@ -592,9 +652,12 @@ paths:
           required: true 
         - in: header
           name: authorization
-          required: true 
           type: string
-          description: Bearer <token>'
+          description: Bearer <token>
+        - in: body
+          name: tutorIntro
+          schema:
+            $ref: '#/definitions/TutorIntro'
       responses:
         200:
           description: OK
@@ -602,26 +665,26 @@ paths:
           $ref: '#/responses/Unauthorized'
         404:
           $ref: '#/responses/NotFound'
-    
-    put:
+
+  /users/{id}/tutor-reference:
+    patch:
       tags:
         - Tutor data
-      description: update tutor data
+      summary: update the tutor's reference
       parameters:
         - in: path
           name: id
           type: string
           description: tutorId
-          required: true
+          required: true 
         - in: header
           name: authorization
-          required: true 
           type: string
-          description: Bearer <token>'
+          description: Bearer <token>
         - in: body
-          name: tutorData
+          name: tutorIntro
           schema:
-            $ref: '#/definitions/TutorDataBody'
+            $ref: '#/definitions/TutorReference'
       responses:
         200:
           description: OK
@@ -630,6 +693,62 @@ paths:
         404:
           $ref: '#/responses/NotFound'
   
+  /users/{id}/tutor-working-experience:
+    patch:
+      tags:
+        - Tutor data
+      summary: update the tutor's working experience
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: tutorId
+          required: true 
+        - in: header
+          name: authorization
+          type: string
+          description: Bearer <token>
+        - in: body
+          name: tutorIntro
+          schema:
+            $ref: '#/definitions/TutorWorkingExperience'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /users/{id}/tutor-teaching-subject:
+    patch:
+      tags:
+        - Tutor data
+      summary: update the tutor's teaching subject
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: tutorId
+          required: true 
+        - in: header
+          name: authorization
+          type: string
+          description: Bearer <token>
+        - in: body
+          name: tutorIntro
+          schema:
+            $ref: '#/definitions/TutorTeachingSubject'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+
+
+
   /cards:
     get:
       tags:

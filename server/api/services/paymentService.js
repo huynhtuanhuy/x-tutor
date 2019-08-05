@@ -23,9 +23,14 @@ class PaymentService {
 
     deleteCard(id){
         return PaymentModel
-            .delete({
+            .remove({
                 _id: id
             })
+    }
+
+    findByIdAndUpdate(id, card) {
+        return PaymentModel
+            .findByIdAndUpdate(id, card, {new: true})
     }
 
 }

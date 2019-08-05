@@ -43,5 +43,6 @@ export default express
     .patch('/:id/password', UserController.updatePassword)
     // .get('/:id/avatar', UserController.getAvatar)
     .patch('/:id/avatar', upload.single('avatar'), UserController.updateAvatar)
-    // .patch('/:id/tutor-about-me', UserController.updateTutorAboutMe)
-    // .patch('/:id/tutor-reference', UserController.updateTutorReference)
+    .patch('/:id/tutor-intro', UserController.updateTutorIntro)
+    .patch('/:id/tutor-reference', UserController.updateTutorReference)
+    .post('/:id/add-tuition-schedule', UserController.createTuitionSchedule)

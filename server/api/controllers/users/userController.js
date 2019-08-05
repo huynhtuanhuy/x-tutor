@@ -144,12 +144,11 @@ class UserController {
     // }
 
 
-
     deleteUser(req, res) {
         userService
             .deleteUser(req.params.id)
             .then(userActiveUpdated => {
-                if(!userActiveUpdated) res.status(404).json({success: false, message: "Something went wrong"})
+                if(!userActiveUpdated) res.status(401).json({success: false, message: "Something went wrong"})
                 else res.status(200).json({success: true, message: "Locked", userActiveUpdated})
             })
             .catch(err => {
@@ -169,41 +168,54 @@ class UserController {
     // }
 
 
-    // updateTutorAboutMe(req, res) {
-    //     this.returnTutorData()
-    //         .then(tutorData => {
-    //             tutorData.aboutMe = req.body
-    //             res.status(200).json({success: true, tutorData})
-    //         })
-    //         .catch(err => {
-    //              console.log(err)
-    //              res.status(500).json({err})
-    //         })
-    // } 
+    updateTutorIntro(req, res) {
+        userService
+        .checkIsTutor(req.params.id)
+        .then(tutorFound => {
+            if(!tutorFound) res.status(401).json({success: false, message: 'This tutor not exist!!!'})
+            else return tutorFound.tutorData
+        })
+        .then(tutorData => {
+            tutorData.aboutMe = req.body.aboutMe
+            tutorData.hourlyRate = req.body.hourlyRate
+            res.status(200).json({success: true, tutorData})
+        })
+        .catch(err => {
+                console.log(err)
+                res.status(500).json({err})
+        })
+    } 
 
 
-    // updateTutorReference(req, res) {
-    //     this.returnTutorData()
-    //         .then(tutorData => {
-    //             console.log(tutorData)
-    //             TODO //update array Education
-    //         })
-    // }
+    updateTutorReference(req, res) {
+        userService
+        .checkIsTutor(req.params.id)
+        .then(tutorFound => {
+            if(!tutorFound) res.status(401).json({success: false, message: 'This tutor not exist!!!'})
+            else return tutorFound.tutorData
+        })
+        .then(turorData => {
+            console.log(req.body)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({err})
+        })
+    }
 
+ 
+    createTuitionSchedule(req, res) {
+        //set senderId & tutorId
+        req.body.senderId = req.decoded.ownerId
+        req.body.tutorId = req.params.tutorId
+        //set courseCode
+        req.body.courseCode = req.decoded.username + req.body.academicLevel
+        //
 
+        const TuitionSchedule = req.body;
+        TODO //calculator date time and total fee
 
-    // createTuitionSchedule(req, res) {
-    //     //set senderId & tutorId
-    //     req.body.senderId = req.decoded.ownerId
-    //     req.body.tutorId = req.params.tutorId
-    //     //set courseCode
-    //     req.body.courseCode = req.decoded.username + req.body.academicLevel
-    //     //
-
-    //     const {TuitionSchedule} = req.body;
-    //     TODO //calculator date time and total fee
-
-    // }
+    }
 
     
     
