@@ -76,7 +76,7 @@ class UserController {
                         })
                         .then(userUpdated => {
                             console.log(userUpdated)
-                            res.status(200).json({success: true, userUpdated})
+                            res.status(200).json({success: true, message: 'Updated!!'})
                         })
                 }
             })
