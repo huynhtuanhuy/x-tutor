@@ -34,28 +34,6 @@ class AuthMiddleware {
             res.status(404).json({success: false, msg: 'Authenticate token is not supplied'})
         }
 
-
-        // if(req.headers.token) {
-        //     try {
-        //         console.log(req.headers.token)
-        //         // verify makes sure that the token hasn't expired and has been issued by us
-        //         result = jwt.verify(req.headers.token, config.JWT_SECRET, {expiresIn: '2d'})
-
-        //         // Let's pass back the decoded token to the request object
-        //         req.decoded = result
-
-        //         next()
-
-        //     } catch(err){
-        //         console.log(err)
-        //         return res.sendStatus(401).json({
-        //             success: false, 
-        //             message: 'Failed to authenticate token!'
-        //         })
-        //     }
-        // } else {
-        //     return res.sendStatus(401).json({success: false, message: 'Authenticate token is not supplied'})
-        // }   
     }
 }
 

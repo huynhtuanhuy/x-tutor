@@ -2,6 +2,7 @@ import userService from '../../services/userService';
 import * as body from 'body-parser';
 import multer from 'multer';
 import * as path from 'path';
+import * as bcrypt from 'bcryptjs';
 
 
 class UserController {
@@ -57,18 +58,27 @@ class UserController {
 
 
     updatePassword(req, res) {
-        // const {password} = req.body;
         userService
-            .getUserById(req.params.id)
-            .then(user =>{
-                if(!user) res.status(404).json({success: false, message: 'Not Found!!'})
+            .getUserById(req.decoded.ownerId)
+            .then(userFound =>{
+                if(!userFound) res.status(403).json({success: false, message: 'Access not allowed!!'})
                 else {
-                    user.password = req.body.password;
-                    return user.save()
+                    console.log('oldPassword ' + req.body.oldPassword)
+                    console.log('hashOldPassword ' + userFound.password)
+                    bcrypt
+                        .compare(req.body.oldPassword, userFound.password)
+                        .then(match => {
+                            if(match) {
+                                console.log('newPass ' + req.body.newPassword);
+                                userFound.password = req.body.newPassword;
+                                return userFound.save()
+                            } else res.status(401).json({success: false, message: 'Incorrect password!!!'})
+                        })
+                        .then(userUpdated => {
+                            console.log(userUpdated)
+                            res.status(200).json({success: true, userUpdated})
+                        })
                 }
-            })
-            .then(userUpdated => {
-                res.status(200).json({success: true, userUpdated})
             })
             .catch(err =>{
                 console.log(err)
@@ -156,16 +166,6 @@ class UserController {
                 res.status(500).json(err)
             })
     }
-
-
-    // returnTutorData(req, res) {
-    //     userService
-    //         .checkIsTutor(req.params.id)
-    //         .then(tutorFound => {
-    //             if(!tutorFound) res.status(404).json({success: false, message: 'This tutor not exist!!!'})
-    //             else return tutorFound.tutorData
-    //         })
-    // }
 
 
     updateTutorIntro(req, res) {

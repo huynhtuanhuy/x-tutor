@@ -40,7 +40,7 @@ export default express
     .get('/', UserController.getAllUser)
     .get('/:id', UserController.getUserById)
     .put('/:id', UserController.updateInfoUser)
-    .patch('/:id/password', UserController.updatePassword)
+    .patch('/password', UserController.updatePassword)
     // .get('/:id/avatar', UserController.getAvatar)
     .patch('/:id/avatar', upload.single('avatar'), UserController.updateAvatar)
     .patch('/:id/tutor-intro', UserController.updateTutorIntro)

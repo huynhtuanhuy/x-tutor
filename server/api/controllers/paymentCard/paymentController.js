@@ -56,30 +56,6 @@ class PaymentController {
     }
 
 
-    // updateCardInfo(req, res) {
-    //     PaymentService
-    //         .getOneCard(req.params.cardId)
-    //         .then(cardFound => {
-    //             if(!cardFound) res.status(404).json({success: false, message: 'Not found Card!!'})
-    //             else {
-    //                 for(let key in req.body){
-    //                     let value = req.body[key];
-    //                     if(value !== null) {
-    //                         cardFound[key] = value
-    //                     }
-    //                 }
-    //                 return cardFound.save()
-    //             }
-    //         })
-    //         .then(cardUpdated => {
-    //             res.status(200).json({success: true, cardUpdated})
-    //         })
-    //         .catch(err => {
-    //              console.log(err)
-    //              res.status(500).json(err)
-    //         })
-    // }
-
 
     updateCardInfo(req, res) {
         PaymentService
