@@ -30,7 +30,7 @@ class UserController {
         userService
             .getUserById(req.params.id)
             .then(userFound => {
-                if(!userFound) res.status(404).json({success: false, message: 'Not Found!!'});
+                if(!userFound) res.status(404).json({success: false, message: 'User is not exist!!'});
                 else {
                     res.status(200).json({success: true, userFound})
                 }
@@ -43,10 +43,11 @@ class UserController {
 
 
     updateInfoUser(req, res) {
+        console.log(req.decoded.ownerId)
         userService
-            .getUserById(req.params.id)
+            .getUserById(req.decoded.ownerId)
             .then(userFound =>{
-                if(!userFound) res.status(404).json({success: false, message: 'Not Found!!'}).end()
+                if(!userFound) res.status(403).json({success: false, message: 'Access is not allow'}).end()
                 else {
                     for(let key in req.body){
                         let value = req.body[key];
@@ -71,7 +72,7 @@ class UserController {
         userService
             .getUserById(req.decoded.ownerId)
             .then(userFound =>{
-                if(!userFound) res.status(403).json({success: false, message: 'Access not allowed!!'})
+                if(!userFound) res.status(403).json({success: false, message: 'Access is not allowed!!'})
                 else {
                     console.log('oldPassword ' + req.body.oldPassword)
                     console.log('hashOldPassword ' + userFound.password)
@@ -166,9 +167,9 @@ class UserController {
 
     deleteUser(req, res) {
         userService
-            .deleteUser(req.params.id)
+            .deleteUser(req.decoded.ownerId)
             .then(userActiveUpdated => {
-                if(!userActiveUpdated) res.status(401).json({success: false, message: "Something went wrong"})
+                if(!userActiveUpdated) res.status(403).json({success: false, message: "Something went wrong"})
                 else res.status(200).json({success: true, message: "Locked", userActiveUpdated})
             })
             .catch(err => {
@@ -180,9 +181,9 @@ class UserController {
 
     updateTutorIntro(req, res) {
         userService
-        .checkIsTutor(req.params.id)
+        .checkIsTutor(req.decoded.ownerId)
         .then(tutorFound => {
-            if(!tutorFound) res.status(401).json({success: false, message: 'This tutor is not exist!!!'})
+            if(!tutorFound) res.status(403).json({success: false, message: 'Access is not allowed!!!'})
             else {
                 tutorFound.tutorData.aboutMe = req.body.aboutMe
                 tutorFound.tutorData.hourlyRate = req.body.hourlyRate
@@ -199,20 +200,85 @@ class UserController {
     } 
 
 
-    updateTutorReference(req, res) {
+    updateTutorRef(req, res) {
+        console.log('ownerId '+ req.decoded.ownerId)
         userService
-        .checkIsTutor(req.params.id)
+        .checkTutor(req.decoded.ownerId)
         .then(tutorFound => {
-            if(!tutorFound) res.status(401).json({success: false, message: 'This tutor is not exist!!!'})
-            else return tutorFound.tutorData
+            if(!tutorFound) res.status(403).json({success: false, message: 'Access is not allowed!!!'})
+            else {
+                var education = req.body.education
+                education.forEach(element => {
+                    console.log(element)
+                    var tutorEdu =  tutorFound.tutorData.education
+                    tutorEdu.push(element)
+                });                
+                return tutorFound.save()
+            }
         })
-        .then(turorData => {
-            console.log(req.body)
-        })
+        .then(tutorUpdated =>{
+            res.status(200).json({success: true, message: 'Updated', tutorUpdated})
+        } )
         .catch(err => {
             console.log(err)
             res.status(500).json({err})
         })
+    }
+
+
+    updateTutorExp(req, res) {
+        //Tutor Working Experience
+        console.log('ownerId '+ req.decoded.ownerId)
+        userService
+        .checkTutor(req.decoded.ownerId)
+        .then(tutorFound => {
+            if(!tutorFound) res.status(403).json({success: false, message: 'Access is not allowed!!!'})
+            else {
+                var workingExperience = req.body.workingExperience
+                workingExperience.forEach(element => {
+                    console.log(element)
+                    var tutorExp =  tutorFound.tutorData.workingExperience
+                    tutorExp.push(element)
+                });                
+                return tutorFound.save()
+            }
+        })
+        .then(tutorUpdated =>{
+            res.status(200).json({success: true, message: 'Updated', tutorUpdated})
+        } )
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({err})
+        })
+    }
+
+
+    updateTutorCourse(req, res) {
+        //Tutor teaching subject
+        console.log('ownerId '+ req.decoded.ownerId)
+        userService
+        .checkTutor(req.decoded.ownerId)
+        .then(tutorFound => {
+            if(!tutorFound) res.status(403).json({success: false, message: 'Access is not allowed!!!'})
+            else {
+                tutorFound.tutorData.basedIn = req.body.basedIn
+                var teachingSubject= req.body.teachingSubject
+                teachingSubject.forEach(element => {
+                    console.log(element)
+                    var tutorSbj =  tutorFound.tutorData.teachingSubject
+                    tutorSbj.push(element)
+                });                
+                return tutorFound.save()
+            }
+        })
+        .then(tutorUpdated =>{
+            res.status(200).json({success: true, message: 'Updated', tutorUpdated})
+        } )
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({err})
+        })
+
     }
 
  

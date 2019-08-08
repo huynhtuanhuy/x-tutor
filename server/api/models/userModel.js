@@ -44,13 +44,13 @@ const userModel = new Schema({
         aboutMe: {type: String},
         education: [{
             major: {type: String},
-            insitute: {type: String},
+            institute: {type: String},
             certificate: {type: String}
         }],
 
         //working experience
         workingExperience: [{
-            year: {type: Number},
+            year: {type: String},
             workedAt: {type: String},
             experience: {type: String},
         }],

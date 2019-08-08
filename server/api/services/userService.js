@@ -30,7 +30,7 @@ class UserService {
     }
 
     
-    checkIsTutor(id){
+    checkTutor(id){
         return UserModel
             .findOne({
                 _id: id,                

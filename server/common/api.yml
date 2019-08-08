@@ -266,26 +266,18 @@ definitions:
         items:
           type: object
           properties:
-            country:
+            course:
               type: string
-              example: Singapore
-            subject:
-              type: array
-              items:
-                type: object
-                properties:
-                  course:
-                    type: string
-                    example: Math
-                  feePerHour:
-                    type: number
-                    example: 12.5
-                  academicLevel:
-                    type: string
-                    example: Beginer
-                  note:
-                    type: string
-                    example:
+              example: Math
+            feePerHour:
+              type: number
+              example: 2.5
+            academicLevel:
+              type: string
+              example: Beginer
+            note:
+              type: string
+              example:
 
         
 paths:
