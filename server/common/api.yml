@@ -178,9 +178,7 @@ definitions:
     title: schedule
     required:
       - preferDay
-      - periodStart
-      - senderId
-      - tutorId
+      - periodeStart
     properties:      
       preferDay:
         type: array
@@ -190,24 +188,15 @@ definitions:
       periodeStart:
         type: string
         format: date
-      sessionNumber:
+      lessionPerCourse:
         type: integer
         example: 6
-      senderId:
-        type: string
-        description: ObjectId 
-      tutorId:
-        type: string
-        description: ObjectId
       country:
         type: string
         example: Laos
       academicLevel:
         type: string
         example: beginer
-      academicGrade:
-        type: string
-        example:
       paymentAmount:
         type: integer
         example: 1
@@ -218,8 +207,7 @@ definitions:
         type: number
         example: 2
       hourStart:
-        type: string
-        format: time
+        type: integer
 
   TutorIntro:
     type: object
@@ -423,7 +411,26 @@ paths:
           $ref: '#/responses/Unauthorized'
         404:
           $ref: '#/responses/NotFound'       
- 
+  
+  /users/all-tutors:
+    get:
+      summary: fetch all tutors
+      tags:
+        - Users
+      parameters:
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+      responses:
+        200:
+          description: return all users
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'  
+  
   /users/{id}:
     get:
       summary: Fetch the user with the specified id
@@ -694,8 +701,6 @@ paths:
         404:
           $ref: '#/responses/NotFound'
 
-
-
   /cards:
     get:
       tags:
@@ -809,6 +814,28 @@ paths:
           $ref: '#/responses/NotFound'
 
   /users/{id}/tuition-schedules:
+    get:
+      tags:
+        - Tuition Schedules
+      summary: get all tuition schedules of specified user
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: userId
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+
     post:
       tags:
         - Tuition Schedules

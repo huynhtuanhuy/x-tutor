@@ -1,4 +1,5 @@
 import userService from '../../services/userService';
+import scheduleService from '../../services/scheduleService';
 import * as body from 'body-parser';
 import multer from 'multer';
 import * as path from 'path';
@@ -15,6 +16,15 @@ class UserController {
             .catch(err => res.status(500).json({success: false, err}))
     }
 
+
+    getAllTutors(req, res) {
+        userService
+            .getAllTutor()
+            .then(allTutor => {
+                res.status(200).json({success: true, allTutor})
+            })
+            .catch(err => res.status(500).json({success: false, err}))
+    }
 
     getUserById(req, res) {
         userService
@@ -172,13 +182,15 @@ class UserController {
         userService
         .checkIsTutor(req.params.id)
         .then(tutorFound => {
-            if(!tutorFound) res.status(401).json({success: false, message: 'This tutor not exist!!!'})
-            else return tutorFound.tutorData
+            if(!tutorFound) res.status(401).json({success: false, message: 'This tutor is not exist!!!'})
+            else {
+                tutorFound.tutorData.aboutMe = req.body.aboutMe
+                tutorFound.tutorData.hourlyRate = req.body.hourlyRate
+                return tutorFound.save()
+            }
         })
-        .then(tutorData => {
-            tutorData.aboutMe = req.body.aboutMe
-            tutorData.hourlyRate = req.body.hourlyRate
-            res.status(200).json({success: true, tutorData})
+        .then(tutorUpdated => {            
+            res.status(200).json({success: true, tutorUpdated})
         })
         .catch(err => {
                 console.log(err)
@@ -191,7 +203,7 @@ class UserController {
         userService
         .checkIsTutor(req.params.id)
         .then(tutorFound => {
-            if(!tutorFound) res.status(401).json({success: false, message: 'This tutor not exist!!!'})
+            if(!tutorFound) res.status(401).json({success: false, message: 'This tutor is not exist!!!'})
             else return tutorFound.tutorData
         })
         .then(turorData => {
@@ -204,18 +216,39 @@ class UserController {
     }
 
  
-    createTuitionSchedule(req, res) {
-        //set senderId & tutorId
-        req.body.senderId = req.decoded.ownerId
-        req.body.tutorId = req.params.tutorId
-        //set courseCode
-        req.body.courseCode = req.decoded.username + req.body.academicLevel
-        //
+    // createTuitionSchedule(req, res) {        
+    //     const tuiSchedule = req.body;
+    //     userService
+    //         .getUserById(req.params.id)
+    //         .then(tutorFound => {
+    //             if(!tutorFound) res.status(404).json({success: false, message: 'This tutor is not exist!!'})
+    //             else {
+    //                 //calculator total fee
+    //                 tuiSchedule.feePerHour = tutorFound.tutorData.hourlyRate
+    //                 tuiSchedule.feeTotal = tuiSchedule.feePerHour*tuiSchedule.hoursPerLession*tuiSchedule.lessionsPerCourse
+    //                 //set senderId & tutorId
+    //                 tuiSchedule.senderId = req.decoded.ownerId
+    //                 tuiSchedule.tutorId = req.params.id
+    //                 //set courseCode
+    //                 tuiSchedule.courseCode = req.body.academicLevel +'-' + req.decoded.username
+    //                 //calculator date time
+    //                 tuiSchedule.hourEnd = req.body.hourStart + req.body.hoursPerLession
+    //                 console.log(tuiSchedule)
+    //                 return scheduleService.createNewSchedule(tuiSchedule)
+    //             }
+    //         })
+    //         .then(scheduleCreated => {
+    //             console.log(scheduleCreated)
+    //             res.status(200).json({success: true}, scheduleCreated)
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //             res.status(500).json(err)
+    //         })
 
-        const TuitionSchedule = req.body;
-        TODO //calculator date time and total fee
+    // }
 
-    }
+
 
     
     

@@ -38,6 +38,7 @@ const upload = multer({
 export default express
     .Router()
     .get('/', UserController.getAllUser)
+    .get('/all-tutors', UserController.getAllTutors)
     .get('/:id', UserController.getUserById)
     .put('/:id', UserController.updateInfoUser)
     .patch('/password', UserController.updatePassword)
@@ -45,4 +46,4 @@ export default express
     .patch('/:id/avatar', upload.single('avatar'), UserController.updateAvatar)
     .patch('/:id/tutor-intro', UserController.updateTutorIntro)
     .patch('/:id/tutor-reference', UserController.updateTutorReference)
-    .post('/:id/add-tuition-schedule', UserController.createTuitionSchedule)
+    // .post('/:id/tuition-schedules', UserController.createTuitionSchedule)

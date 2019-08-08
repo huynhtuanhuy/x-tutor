@@ -1,6 +1,5 @@
 import UserModel from '../models/userModel';
 import * as path from 'path';
-import ScheduleModel from '../models/scheduleModel';
 
 
 class UserService {
@@ -12,8 +11,8 @@ class UserService {
 
     getAllTutor() {
         return UserModel
-            .find({},{
-                rolsesId: 'Tutor'
+            .find({
+                rolesId: 'Tutor'
             })
     }
 
@@ -72,12 +71,6 @@ class UserService {
                 {_id: id},
                 {avatar: path}
             )
-    }
-
-
-    createNewSchedules(TuitionSchedules){
-        ScheduleModel
-            .create(TuitionSchedules)
     }
 
 
