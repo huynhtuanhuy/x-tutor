@@ -48,4 +48,4 @@ export default express
     .patch('/:id/tutor-reference', UserController.updateTutorRef)
     .patch('/:id/tutor-working-experience', UserController.updateTutorExp)
     .patch('/:id/tutor-teaching-subject', UserController.updateTutorCourse)
-    // .post('/:id/tuition-schedules', UserController.createTuitionSchedule)
+    .post('/:id/tuition-schedules', UserController.createTuitionSchedule)

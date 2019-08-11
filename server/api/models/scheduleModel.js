@@ -12,7 +12,7 @@ const scheduleModel = new Schema({
     senderId: {type: Schema.Types.ObjectId, ref: 'user'},
     tutorId: {type: Schema.Types.ObjectId, ref: 'user'},
     country: {type: String},
-    academicLevel: {tpye: String, enum: ['Beginer', 'Intensive', 'Advanced', 'Master']},
+    academicLevel: {type: String, enum: ['Beginner', 'Intensive', 'Advanced', 'Master']},
     courseCode: {type: String, required: true},
     paymentType: {type: String, enum: ['Credit Card', 'Paypal']},
     paymentAmount: {type: Number, required: true},

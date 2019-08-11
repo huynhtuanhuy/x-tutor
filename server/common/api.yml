@@ -188,7 +188,7 @@ definitions:
       periodeStart:
         type: string
         format: date
-      lessionPerCourse:
+      lessionsPerCourse:
         type: integer
         example: 6
       country:
