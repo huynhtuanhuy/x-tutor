@@ -77,11 +77,12 @@ userModel.pre('save', function(next){
     bcrypt
         .genSalt(12)
         .then(salt => bcrypt.hash(this.password, salt))
-        .then(hash =>{
+        .then(hash => {
             this.password = hash;
             next();
         })
         .catch(err => next(err))
 })
+
 
 module.exports = mongoose.model('user', userModel);

@@ -27,4 +27,21 @@ const scheduleModel = new Schema({
 })
 
 
+// scheduleModel.pre('findByIdAndUpdate', function(next){
+//     if(!this.isModified('hourStart')){
+//         return next()
+//     } else {
+//         console.log(this.feeTotal)
+//         //calculator total fee
+//         this.feeTotal = this.feePerHour*this.hoursPerLession*this.lessionsPerCourse
+//         //calculator date time
+//         this.hourEnd = this.hourStart + this.hoursPerLession
+//         //set periodeEnd
+//         this.periodeEnd = '2019-10-10'
+
+//         next()        
+//     }
+// })
+
+
 module.exports = mongoose.model('schedule', scheduleModel);

@@ -5,9 +5,9 @@ import * as bcrypt from 'bcryptjs';
 
 class AuthController {
     registerUser(req, res) {
-        const {username, password, email, rolesId} = req.body;
+        const newUser = req.body;
         UserService
-            .createNewUser({username, password, email, rolesId})
+            .createNewUser(newUser)
             .then(userCreated => res.status(200).json({success:true, userCreated}))
             .catch(err => {
                 console.log(err)

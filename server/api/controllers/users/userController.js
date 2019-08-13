@@ -282,7 +282,6 @@ class UserController {
     }
 
 
-
     createTuitionSchedule(req, res) {
         const tuiSchedule = req.body;
         userService
@@ -318,6 +317,17 @@ class UserController {
                 res.status(500).json({message: "Something went wrong!!!", err})
             })
     }
+
+    
+    getAllSchedules(req, res){
+        scheduleService
+            .getAllSchedule(req.params.id)
+            .then(allSchedules => {
+                res.status(200).json({success: true, allSchedules})
+            })
+            .catch(err => res.status(500).json({success: false, message: 'Something went wrong!!!', err}))
+    }
+
     
 }
 

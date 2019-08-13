@@ -4,8 +4,8 @@ import ScheduleModel from '../models/scheduleModel';
 class ScheduleService {
     getAllSchedule(userId) {
         return ScheduleModel
-            .find({},{
-                
+            .find({
+                $or: [{tutorId: userId}, {senderId: userId}]
             })
     }
 
@@ -22,6 +22,15 @@ class ScheduleService {
     }
 
 
+    updateSchedule(id, tuiSchedule){
+        return ScheduleModel
+            .findByIdAndUpdate(id, tuiSchedule, {new: true})
+    }
+
+    deleteSchedule(id) {
+        return ScheduleModel
+            .remove({_id: id})
+    }
  }
 
 

@@ -40,9 +40,9 @@ class UserService {
 
 
     //to register new User
-    createNewUser({username, password, email, rolesId}) {
+    createNewUser(newUser) {
         return UserModel
-        .create({username, password, email, rolesId})
+        .create(newUser)
     }
 
 
