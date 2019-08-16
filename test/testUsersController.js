@@ -14,7 +14,7 @@ describe('Users', ()=>{
         .then(r=>{
             console.log(r.body);
             expect(r.body)
-                .to.be.an.an('object')
+                .to.be.an.an('array')
         })
     )
 });

@@ -611,6 +611,36 @@ paths:
           $ref: '#/responses/Unauthorized'
         404:
           $ref: '#/responses/NotFound'
+    delete:
+      tags:
+        - Tutor data
+      summary: delete specified row in tutor's introduction
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: tutorId
+          required: true 
+        - in: header
+          name: authorization
+          type: string
+          description: Bearer <token>
+          required: true 
+        - in: body
+          name: row
+          schema:
+            type: object
+            properties:
+              rowIndex:
+                type: integer
+                example: 1
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
 
   /users/{id}/tutor-reference:
     patch:
@@ -631,6 +661,36 @@ paths:
           name: tutorIntro
           schema:
             $ref: '#/definitions/TutorReference'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    delete:
+      tags:
+        - Tutor data
+      summary: delete specified row in tutor's reference
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: tutorId
+          required: true 
+        - in: header
+          name: authorization
+          type: string
+          description: Bearer <token>
+          required: true 
+        - in: body
+          name: row
+          schema:
+            type: object
+            properties:
+              rowIndex:
+                type: integer
+                example: 1
       responses:
         200:
           description: OK
@@ -665,6 +725,36 @@ paths:
           $ref: '#/responses/Unauthorized'
         404:
           $ref: '#/responses/NotFound'
+    delete:
+      tags:
+        - Tutor data
+      summary: delete specified row in tutor's exp
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: tutorId
+          required: true 
+        - in: header
+          name: authorization
+          type: string
+          description: Bearer <token>
+          required: true 
+        - in: body
+          name: row
+          schema:
+            type: object
+            properties:
+              rowIndex:
+                type: integer
+                example: 1
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
   
   /users/{id}/tutor-teaching-subject:
     patch:
@@ -685,6 +775,36 @@ paths:
           name: tutorIntro
           schema:
             $ref: '#/definitions/TutorTeachingSubject'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    delete:
+      tags:
+        - Tutor data
+      summary: delete specified row in tutor's teaching subject
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: tutorId
+          required: true 
+        - in: header
+          name: authorization
+          type: string
+          description: Bearer <token>
+          required: true 
+        - in: body
+          name: row
+          schema:
+            type: object
+            properties:
+              rowIndex:
+                type: integer
+                example: 1
       responses:
         200:
           description: OK
@@ -813,6 +933,7 @@ paths:
       parameters:
         - in: path
           name: id
+          required: true
           type: string
           description: userId
         - in: header
@@ -863,6 +984,7 @@ paths:
       parameters:
         - in: path
           name: id
+          required: true
           type: string
           description: tuition schedule Id
         - in: header
@@ -884,6 +1006,7 @@ paths:
       parameters:
         - in: path
           name: id
+          required: true
           type: string
           description: tuition schedule Id
         - in: header
@@ -910,6 +1033,7 @@ paths:
       parameters:
         - in: path
           name: id
+          required: true
           type: string
           description: tuition schedule Id
         - in: header
@@ -925,6 +1049,80 @@ paths:
         404:
           $ref: '#/responses/NotFound'
    
+  /schedules/{id}/sessions:
+    get:
+      tags:
+        - Sessions
+      summary: fetch all sessions of specified tuition schedule
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true 
+          description: tuition schedules Id
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>      
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    post:
+      tags:
+        - Sessions
+      summary: create new sessions of specified tuition schedule
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: tuition schedules Id
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+
+  /sessions/{id}:
+    get:
+      tags:
+        - Sessions
+      summary: fetch specified session
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: session Id
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+    put:
+      tags:
+        - Sessions
+      summary: 
+
 
  
 # Descriptions of common responses
