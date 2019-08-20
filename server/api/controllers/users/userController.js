@@ -212,7 +212,7 @@ class UserController {
                     console.log(element)
                     var tutorEdu =  tutorFound.tutorData.education
                     tutorEdu.push(element)
-                });                
+                });
                 return tutorFound.save()
             }
         })
@@ -224,6 +224,11 @@ class UserController {
             res.status(500).json({err})
         })
     }
+
+    // updateTutorRef(req, res) {
+    //     userService
+    //         .checkTutor(req.decoded.ownerId)
+    // }
 
 
     updateTutorExp(req, res) {

@@ -2,7 +2,7 @@ import UserController from './userController';
 import * as express from 'express';
 import multer from 'multer';
 import * as path from 'path';
-
+import Auth from '../../middlewares/auth'
 
 //set the storage engine:
 const storage = multer.diskStorage({
@@ -40,13 +40,13 @@ export default express
     .get('/', UserController.getAllUser)
     .get('/all-tutors', UserController.getAllTutors)
     .get('/:id', UserController.getUserById)
-    .put('/:id', UserController.updateInfoUser)
-    .patch('/password', UserController.updatePassword)
+    .put('/:id', Auth.validateToken, UserController.updateInfoUser)
+    .patch('/password', Auth.validateToken, UserController.updatePassword)
     // .get('/:id/avatar', UserController.getAvatar)
-    .patch('/:id/avatar', upload.single('avatar'), UserController.updateAvatar)
-    .patch('/:id/tutor-intro', UserController.updateTutorIntro)
-    .patch('/:id/tutor-reference', UserController.updateTutorRef)
-    .patch('/:id/tutor-working-experience', UserController.updateTutorExp)
+    .patch('/:id/avatar',Auth.validateToken,  upload.single('avatar'), UserController.updateAvatar)
+    .patch('/:id/tutor-intro', Auth.validateToken, UserController.updateTutorIntro)
+    .patch('/:id/tutor-reference', Auth.validateToken, UserController.updateTutorRef)
+    .patch('/:id/tutor-working-experience', Auth.validateToken, UserController.updateTutorExp)
     .patch('/:id/tutor-teaching-subject', UserController.updateTutorCourse)
-    .post('/:id/tuition-schedules', UserController.createTuitionSchedule)
+    .post('/:id/tuition-schedules', Auth.validateToken, UserController.createTuitionSchedule)
     .get('/:id/tuition-schedules', UserController.getAllSchedules)

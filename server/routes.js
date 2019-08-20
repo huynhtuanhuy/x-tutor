@@ -33,7 +33,7 @@ export default function routes(app) {
   });
   app.use('/api/v1/examples', examplesRouter);
   app.use('/api/v1/auth', authRouter);
-  app.use('/api/v1/users', Auth.validateToken, userRouter);
+  app.use('/api/v1/users', userRouter);
   app.use('/api/v1/cards', Auth.validateToken, paymentRouter);
   app.use('/api/v1/schedules', Auth.validateToken, scheduleRouter)
 }

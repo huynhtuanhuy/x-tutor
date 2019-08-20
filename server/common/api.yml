@@ -390,12 +390,12 @@ paths:
       tags:
         - Users
       description: Fetch all users
-      parameters:
-        - in: header
-          name: authorization
-          required: true 
-          type: string
-          description: Bearer <token>'
+      # parameters:
+      #   - in: header
+      #     name: authorization
+      #     required: true 
+      #     type: string
+      #     description: Bearer <token>'
       responses:
         200:
           description: return all users
@@ -409,12 +409,12 @@ paths:
       summary: fetch all tutors
       tags:
         - Users
-      parameters:
-        - in: header
-          name: authorization
-          required: true 
-          type: string
-          description: Bearer <token>'
+      # parameters:
+      #   - in: header
+      #     name: authorization
+      #     required: true 
+      #     type: string
+      #     description: Bearer <token>'
       responses:
         200:
           description: return all users
@@ -435,11 +435,11 @@ paths:
           required: true
           description: The id of the user to retrieve
           type: string
-        - in: header
-          name: authorization
-          required: true 
-          type: string
-          description: Bearer <token>'
+        # - in: header
+        #   name: authorization
+        #   required: true 
+        #   type: string
+        #   description: Bearer <token>'
       responses:
         200:
           description: return the user with the specified id
@@ -514,11 +514,11 @@ paths:
           type: string
           required: true
           description: UserId
-        - in: header
-          name: authorization
-          required: true 
-          type: string
-          description: Bearer <token>'
+        # - in: header
+        #   name: authorization
+        #   required: true 
+        #   type: string
+        #   description: Bearer <token>'
       responses:
         200:
           description: OK
@@ -604,36 +604,6 @@ paths:
           name: tutorIntro
           schema:
             $ref: '#/definitions/TutorIntro'
-      responses:
-        200:
-          description: OK
-        401:
-          $ref: '#/responses/Unauthorized'
-        404:
-          $ref: '#/responses/NotFound'
-    delete:
-      tags:
-        - Tutor data
-      summary: delete specified row in tutor's introduction
-      parameters:
-        - in: path
-          name: id
-          type: string
-          description: tutorId
-          required: true 
-        - in: header
-          name: authorization
-          type: string
-          description: Bearer <token>
-          required: true 
-        - in: body
-          name: row
-          schema:
-            type: object
-            properties:
-              rowIndex:
-                type: integer
-                example: 1
       responses:
         200:
           description: OK
@@ -1038,7 +1008,7 @@ paths:
           description: tuition schedule Id
         - in: header
           name: authorization
-          required: true 
+          required: true
           type: string
           description: Bearer <token>
       responses:
@@ -1048,6 +1018,13 @@ paths:
           $ref: '#/responses/Unauthorized'
         404:
           $ref: '#/responses/NotFound'
+  
+  # /shecdules/{id}/book:
+  #   tags:
+  #     - Tuition Schedules
+  #   summary: book tuition schedule
+  #   post:
+      
    
   /schedules/{id}/sessions:
     get:
@@ -1118,13 +1095,33 @@ paths:
           $ref: '#/responses/Unauthorized'
         404:
           $ref: '#/responses/NotFound'
-    put:
+    delete:
       tags:
         - Sessions
-      summary: 
+      summary: cancelled specified session
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: session Id
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+
+        
 
 
- 
+
 # Descriptions of common responses
 responses:
   NotFound:
