@@ -11,7 +11,7 @@ describe('Users', ()=>{
         .get('/api/v1/users')
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .then(r=>{
+        .then(r => {
             console.log(r.body);
             expect(r.body)
                 .to.be.an.an('array')

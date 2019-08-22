@@ -191,18 +191,9 @@ definitions:
       lessionsPerCourse:
         type: integer
         example: 6
-      country:
-        type: string
-        example: Laos
       academicLevel:
         type: string
         example: beginer
-      paymentAmount:
-        type: integer
-        example: 1
-      paymentDate:
-        type: string
-        format: date
       hoursPerLession:
         type: number
         example: 2
@@ -1019,11 +1010,38 @@ paths:
         404:
           $ref: '#/responses/NotFound'
   
-  # /shecdules/{id}/book:
-  #   tags:
-  #     - Tuition Schedules
-  #   summary: book tuition schedule
-  #   post:
+  /schecdules/{id}/pay:
+    tags:
+      - Tuition Schedules
+    summary: book tuition schedule
+    post:
+      tags:
+        - Tuition Schedules
+      summary: delete the specified tuition schedule
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+          description: tuition schedule Id
+        - in: header
+          name: authorization
+          required: true
+          type: string
+          description: Bearer <token>
+        - in: body
+          name: paymentGate
+          required: true 
+          schema:
+            $ref: "#/definitions/PaymentCardBody"
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
+
       
    
   /schedules/{id}/sessions:
