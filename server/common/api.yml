@@ -1010,7 +1010,7 @@ paths:
         404:
           $ref: '#/responses/NotFound'
   
-  /schecdules/{id}/pay:
+  /schedules/{id}/pay:
     post:
       tags:
         - Tuition Schedules

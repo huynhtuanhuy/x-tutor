@@ -7,3 +7,4 @@ export default express
     .get('/:id', scheduleController.getById)
     .put('/:id', scheduleController.updateSchedule)
     .delete('/:id', scheduleController.deleteSchedule)
+    .post('/:id/pay', scheduleController.paymentGate)

@@ -31,6 +31,12 @@ class ScheduleService {
         return ScheduleModel
             .remove({_id: id})
     }
+
+
+    updateScheduleStatus(id, newStatus) {
+        return ScheduleModel
+            .findByIdAndUpdate(id, {$set: {tuitionStatus: newStatus}})
+    }
  }
 
 

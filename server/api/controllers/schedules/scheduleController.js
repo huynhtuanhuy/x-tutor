@@ -51,6 +51,21 @@ class ScheduleController {
             .then(res.status(200).json({success: true, message: "deleted!"}))
             .catch(err => res.status(500).json({success: false, err}))
     }
+
+
+    paymentGate(req, res) {
+        var newStatus = 'In Progress'
+        scheduleService
+            .updateScheduleStatus(req.params.id, newStatus)
+            .then(statusUpdated => {
+                if(statusUpdated) res.status(200).json({status: statusUpdated.tuitonStatus, message: "Thank you!!!"})
+                else res.status(403).json({success: false, message: 'This tuition schedule not exist!!'})
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({err, message: "something went wrong!!!"})
+            })
+    }
 }
 
 

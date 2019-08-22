@@ -21,7 +21,7 @@ const scheduleModel = new Schema({
     hoursPerLession: {type: Number, required: true},
     hourStart: {type: Number, required: true},
     hourEnd: {type: Number},
-    tuitonStatus: {type: String, enum: ['Pending', 'In Progress', 'Cancelled', 'Deferred'], default: 'Pending'}
+    tuitionStatus: {type: String, enum: ['Pending', 'In Progress', 'Cancelled', 'Deferred'], default: 'Pending'}
 }, {
     timestamps: true
 })
