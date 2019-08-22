@@ -1011,13 +1011,10 @@ paths:
           $ref: '#/responses/NotFound'
   
   /schecdules/{id}/pay:
-    tags:
-      - Tuition Schedules
-    summary: book tuition schedule
     post:
       tags:
         - Tuition Schedules
-      summary: delete the specified tuition schedule
+      summary: pay the bill of specified tuition schedule
       parameters:
         - in: path
           name: id
