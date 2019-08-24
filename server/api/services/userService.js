@@ -86,6 +86,12 @@ class UserService {
         return UserModel
             .findByIdAndUpdate()
     }
+
+
+    deleteTutorRefRow(index) {
+        return UserModel
+            .findByIdAndRemove()
+    }
 }
 
 export default new UserService()

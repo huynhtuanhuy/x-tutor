@@ -4,6 +4,7 @@ import * as body from 'body-parser';
 import multer from 'multer';
 import * as path from 'path';
 import * as bcrypt from 'bcryptjs';
+import * as moment from 'moment';
 
 
 class UserController {
@@ -154,34 +155,40 @@ class UserController {
     } 
 
 
-    // updateTutorRef(req, res) {
-    //     console.log('ownerId '+ req.decoded.ownerId)
-    //     userService
-    //     .checkTutor(req.decoded.ownerId)
-    //     .then(tutorFound => {
-    //         if(!tutorFound) res.status(403).json({success: false, message: 'Access is not allowed!!!'})
-    //         else {
-    //             var education = req.body.education
-    //             education.forEach(element => {
-    //                 console.log(element)
-    //                 var tutorEdu =  tutorFound.tutorData.education
-    //                 tutorEdu.push(element)
-    //             });
-    //             return tutorFound.save()
-    //         }
-    //     })
-    //     .then(tutorUpdated =>{
-    //         res.status(200).json({success: true, message: 'Updated', tutorUpdated})
-    //     } )
-    //     .catch(err => {
-    //         console.log(err)
-    //         res.status(500).json({err})
-    //     })
-    // }
-
     updateTutorRef(req, res) {
+        console.log('ownerId '+ req.decoded.ownerId)
         userService
-            .checkTutor(req.decoded.ownerId)
+        .checkTutor(req.decoded.ownerId)
+        .then(tutorFound => {
+            if(!tutorFound) res.status(403).json({success: false, message: 'Access is not allowed!!!'})
+            else {
+                var education = req.body.education
+                education.forEach(element => {
+                    console.log(element)
+                    var tutorEdu =  tutorFound.tutorData.education
+                    tutorEdu.push(element)
+                });
+                return tutorFound.save()
+            }
+        })
+        .then(tutorUpdated =>{
+            res.status(200).json({success: true, message: 'Updated', tutorUpdated})
+        } )
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({err})
+        })
+    }
+
+    
+    // updateTutorRef(req, res) {
+    //     userService
+    //         .checkTutor(req.decoded.ownerId)
+    // }
+    
+
+    deleteTutorRefRow(req, res) {
+
     }
 
 
@@ -189,7 +196,7 @@ class UserController {
         //Tutor Working Experience
         console.log('ownerId '+ req.decoded.ownerId)
         userService
-        .checkTutor(req.decoded.ownerId)
+        .checkTutor(req.decoded.ownerId)    
         .then(tutorFound => {
             if(!tutorFound) res.status(403).json({success: false, message: 'Access is not allowed!!!'})
             else {

@@ -33,9 +33,9 @@ class ScheduleService {
     }
 
 
-    updateScheduleStatus(id, newStatus) {
+    updateScheduleStatus(id, statusObj) {
         return ScheduleModel
-            .findByIdAndUpdate(id, {$set: {tuitionStatus: newStatus}})
+            .findByIdAndUpdate(id, {$set: statusObj}, {new: true})
     }
  }
 

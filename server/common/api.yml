@@ -156,9 +156,6 @@ definitions:
       city:
         type: string
         example: Ha Noi
-      province:
-        type: string
-        example: HA NOI
       country:
         type: string
         example: VIET NAM
@@ -1132,10 +1129,7 @@ paths:
           $ref: '#/responses/Unauthorized'
         404:
           $ref: '#/responses/NotFound'
-
-        
-
-
+     
 
 # Descriptions of common responses
 responses:

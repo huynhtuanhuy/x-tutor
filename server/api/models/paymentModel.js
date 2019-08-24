@@ -13,7 +13,6 @@ const paymentCardModel = new Schema({
     //billing address
     residentialAddress:{type: String},
     city:{type: String},
-    province:{type: String},
     country:{type: String},
     postalCode:{type: String}
 },{

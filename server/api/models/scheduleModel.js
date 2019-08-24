@@ -17,7 +17,7 @@ const scheduleModel = new Schema({
     paymentType: {type: String, enum: ['Credit Card', 'Paypal']},
     paymentAmount: {type: Number},
     paymentStatus: {type: String, enum:['Pending', 'In progress', 'Completed', 'Cancelled', 'Refunded'], default:'Pending'},
-    paymentDate: {type: Date},
+    paymentDate: {type: Date,default: null},
     hoursPerLession: {type: Number, required: true},
     hourStart: {type: Number, required: true},
     hourEnd: {type: Number},

@@ -54,11 +54,14 @@ class ScheduleController {
 
 
     paymentGate(req, res) {
-        var newStatus = 'In Progress'
+        const statusObj = {};
+        statusObj.paymentStatus = 'Completed';
+        statusObj.tuitionStatus = 'In Progress';
+        statusObj.paymentDate = Date.now();
         scheduleService
-            .updateScheduleStatus(req.params.id, newStatus)
+            .updateScheduleStatus(req.params.id, statusObj)
             .then(statusUpdated => {
-                if(statusUpdated) res.status(200).json({status: statusUpdated.tuitonStatus, message: "Thank you!!!"})
+                if(statusUpdated) res.status(200).json({status: statusUpdated, message: "Thank you!!!"})
                 else res.status(403).json({success: false, message: 'This tuition schedule not exist!!'})
             })
             .catch(err => {
