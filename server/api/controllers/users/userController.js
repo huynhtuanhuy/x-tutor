@@ -119,52 +119,6 @@ class UserController {
     }
 
 
-    updateAvatarPath(req, res) {
-        //set the storage engine:
-        var storage = multer.diskStorage({
-            destination: function(req, file, cb) {
-                console.log('storage here')
-                cb(null, './public/uploads')
-            },
-            filename: function(req, file, cb) {
-                console.log('file' + file)
-                cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-                // cb(null, file.originalname)
-            }
-        })
-
-        //upload
-        var upload = multer({
-            storage: storage,
-            fileFilter: function(req, file, cb) {
-                //allowed ext
-                var fileTypes = /jpeg|jpg|gif|png/;
-                //check ext
-                var extName = fileTypes.test(path.extname(file.originalname).toLowerCase())
-                //check mime
-                var mimeType = fileTypes.test(file.mimetype);
-
-                if(mimeType && extName !== fileTypes) {
-                    return cb(null, true)
-                } else cb('ERR. Image only!!!')
-            }
-        }).single('avatar')
-
-        upload(req, res, (err) => {
-            if(err){
-                res.status(500)
-            } else {
-                if(req.file == undefined){
-                    res.status(403).json('No file seclected')
-                } else {
-                    console.log(req.file)
-                    res.status(200).json({path: `/uploads/${req.file.filename}`})
-                }
-            }
-        });
-    }
-
-
     deleteUser(req, res) {
         userService
             .deleteUser(req.decoded.ownerId)
@@ -181,7 +135,7 @@ class UserController {
 
     updateTutorIntro(req, res) {
         userService
-        .checkIsTutor(req.decoded.ownerId)
+        .checkTutor(req.decoded.ownerId)
         .then(tutorFound => {
             if(!tutorFound) res.status(403).json({success: false, message: 'Access is not allowed!!!'})
             else {
@@ -200,35 +154,35 @@ class UserController {
     } 
 
 
-    updateTutorRef(req, res) {
-        console.log('ownerId '+ req.decoded.ownerId)
-        userService
-        .checkTutor(req.decoded.ownerId)
-        .then(tutorFound => {
-            if(!tutorFound) res.status(403).json({success: false, message: 'Access is not allowed!!!'})
-            else {
-                var education = req.body.education
-                education.forEach(element => {
-                    console.log(element)
-                    var tutorEdu =  tutorFound.tutorData.education
-                    tutorEdu.push(element)
-                });
-                return tutorFound.save()
-            }
-        })
-        .then(tutorUpdated =>{
-            res.status(200).json({success: true, message: 'Updated', tutorUpdated})
-        } )
-        .catch(err => {
-            console.log(err)
-            res.status(500).json({err})
-        })
-    }
-
     // updateTutorRef(req, res) {
+    //     console.log('ownerId '+ req.decoded.ownerId)
     //     userService
-    //         .checkTutor(req.decoded.ownerId)
+    //     .checkTutor(req.decoded.ownerId)
+    //     .then(tutorFound => {
+    //         if(!tutorFound) res.status(403).json({success: false, message: 'Access is not allowed!!!'})
+    //         else {
+    //             var education = req.body.education
+    //             education.forEach(element => {
+    //                 console.log(element)
+    //                 var tutorEdu =  tutorFound.tutorData.education
+    //                 tutorEdu.push(element)
+    //             });
+    //             return tutorFound.save()
+    //         }
+    //     })
+    //     .then(tutorUpdated =>{
+    //         res.status(200).json({success: true, message: 'Updated', tutorUpdated})
+    //     } )
+    //     .catch(err => {
+    //         console.log(err)
+    //         res.status(500).json({err})
+    //     })
     // }
+
+    updateTutorRef(req, res) {
+        userService
+            .checkTutor(req.decoded.ownerId)
+    }
 
 
     updateTutorExp(req, res) {

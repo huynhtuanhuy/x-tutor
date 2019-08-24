@@ -60,7 +60,7 @@ const userModel = new Schema({
         teachingSubject: [{
             course: {type: String},
             feePerHour: {type: Number},
-            academicLevel: {type: String, enum: ['Beginer', 'Intensive', 'Advanced']},
+            academicLevel: {type: String, enum: ['Beginner', 'Intensive', 'Advanced']},
             note: {type: String}
         }]
     }

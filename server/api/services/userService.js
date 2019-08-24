@@ -82,6 +82,10 @@ class UserService {
     }
 
 
+    updateTutorRef(ref) {
+        return UserModel
+            .findByIdAndUpdate()
+    }
 }
 
 export default new UserService()

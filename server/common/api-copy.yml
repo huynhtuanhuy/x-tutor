@@ -23,18 +23,24 @@ consumes:
 produces:
   - application/json
 
+# securitiyDefinitions:
+#   Bearer:
+#     type: apiKey
+#     name: Authorization
+#     in: header
+
 
 definitions:
   # Schema for error response body
   Error:
     type: object
     properties:
-      success:
-        type: boolean
+      code:
+        type: string
       message:
         type: string
     required:
-      - success
+      - code
       - message
   
   ExampleBody:
@@ -46,7 +52,7 @@ definitions:
       name:
         type: string
         example: no_stress
-
+  
   RegisterBody:
     type: object
     title: register user
@@ -69,8 +75,7 @@ definitions:
       rolesId:
         type: string
         enum: ['Tutor', 'Student']
-        example: Tutor
-
+  
   SignInBody:
     type: object
     title: login
@@ -108,8 +113,7 @@ definitions:
         example: 
       gender:
         type: string
-        example: Female
-        enum: ['Female', 'Male', 'Others']
+        example: female
       religion:
         type: string
         example: No religion
@@ -164,7 +168,7 @@ definitions:
         example: VIET NAM
       postalCode:
         type: string
-        example: "460000"
+        example: 460000
       remarks:
         type: string
         example: nothing
@@ -189,7 +193,7 @@ definitions:
         example: 6
       academicLevel:
         type: string
-        example: Beginner
+        example: beginer
       hoursPerLession:
         type: number
         example: 2
@@ -237,13 +241,9 @@ definitions:
           properties:
             year:
               type: string
-              example: '2019'
-            workedAt:
-              type: string
-              example: Back-end Dev
             experience:
               type: string
-              example: Worked at X TUTOR
+              example:
   
   TutorTeachingSubject:
     type: object
@@ -265,7 +265,7 @@ definitions:
               example: 2.5
             academicLevel:
               type: string
-              example: Beginner
+              example: Beginer
             note:
               type: string
               example:
@@ -337,19 +337,19 @@ paths:
           $ref: '#/responses/Unauthorized'
         404:
           $ref: '#/responses/NotFound'
-    # delete:
-    #   tags:
-    #     - Auth
-    #   summary: Sign Out
-    #   parameters:
-    #     - in: header
-    #       name: authorization
-    #       required: true 
-    #       type: string
-    #       description: Bearer <token>'
-    #   responses:
-    #     200:
-    #       description: OK
+    delete:
+      tags:
+        - Auth
+      summary: Sign Out
+      parameters:
+        - in: header
+          name: authorization
+          required: true 
+          type: string
+          description: Bearer <token>'
+      responses:
+        200:
+          description: OK
 
   /auth/register:
     post:
@@ -495,28 +495,28 @@ paths:
           description: user not found
   
   /users/{id}/avatar:
-    # get:
-    #   tags:
-    #     - Users
-    #   description: get profile Picture of user with specified id
-    #   parameters:
-    #     - in: path
-    #       name: id
-    #       type: string
-    #       required: true
-    #       description: UserId
-    #     - in: header
-    #       name: authorization
-    #       required: true 
-    #       type: string
-    #       description: Bearer <token>'
-    #   responses:
-    #     200:
-    #       description: OK
-    #     401:
-    #       $ref: '#/responses/Unauthorized'
-    #     404:
-    #       $ref: '#/responses/NotFound'
+    get:
+      tags:
+        - Users
+      description: get profile Picture of user with specified id
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: UserId
+        # - in: header
+        #   name: authorization
+        #   required: true 
+        #   type: string
+        #   description: Bearer <token>'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/responses/Unauthorized'
+        404:
+          $ref: '#/responses/NotFound'
     patch:
       tags:
         - Users
@@ -566,7 +566,7 @@ paths:
                 type: string
               newPassword:
                 type: string
-          description: change password
+          description: the avatar to upload
       responses:
         200:
           description: OK
